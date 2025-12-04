@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+SQLAlchemy
+pydantic[email]
+pydantic-settings
+python-dotenv
+passlib
+python-jose[cryptography]
+alembic
+
+pytest
+requests
+pytest-html
+
+playwright
+pytest-playwright

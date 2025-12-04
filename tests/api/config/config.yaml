@@ -1,0 +1,6 @@
+base_url: "http://127.0.0.1:8000"
+
+default_user:
+  email: "api_tester@example.com"
+  full_name: "API Tester"
+  password: "test1234"
