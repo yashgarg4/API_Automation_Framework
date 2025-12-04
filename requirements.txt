@@ -14,3 +14,6 @@ pytest-html
 
 playwright
 pytest-playwright
+
+google-generativeai
+google-genai
