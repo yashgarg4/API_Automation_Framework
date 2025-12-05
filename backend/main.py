@@ -9,6 +9,7 @@ from backend.db.session import Base, engine
 from backend.models import user  # noqa: F401
 from backend.models import project  # noqa: F401
 from backend.models import bug  # noqa: F401
+from backend.models import user, project, bug, test_run
 
 # Routers
 from backend.api.routes import auth as auth_routes
@@ -20,12 +21,12 @@ from backend.api.routes import ai_dashboard as ai_dashboard_routes  # NEW
 
 settings = get_settings()
 
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
 )
+
+Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,

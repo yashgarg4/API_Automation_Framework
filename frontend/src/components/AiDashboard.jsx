@@ -42,6 +42,8 @@ function AiDashboard() {
   const [analysis, setAnalysis] = useState("");
   const [failures, setFailures] = useState([]);
 
+  const [history, setHistory] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -94,6 +96,21 @@ function AiDashboard() {
     }
   };
 
+  const handleLoadHistory = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await jsonRequest(
+        "/ai/dashboard/test-runs?limit=10&run_type=ai_executor"
+      );
+      setHistory(data || []);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="ai-dashboard">
       <h2>AI Testing Dashboard</h2>
@@ -114,7 +131,9 @@ function AiDashboard() {
               <div key={idx} className="ai-list-item">
                 <strong>{tc.name}</strong>
                 <div>
-                  {tc.request?.method || "GET"} {tc.request?.path || "/"}
+                  {(tc.request?.method || "GET") +
+                    " " +
+                    (tc.request?.path || "/")}
                 </div>
                 <div>Category: {tc.category}</div>
               </div>
@@ -151,7 +170,9 @@ function AiDashboard() {
                   {r.status_code !== null ? r.status_code : "ERR"}
                 </div>
                 <div>Category: {r.category}</div>
-                {!r.passed && r.error && <div>Error: {r.error}</div>}
+                {!r.passed && r.error && (
+                  <div style={{ fontSize: "0.85rem" }}>Error: {r.error}</div>
+                )}
               </div>
             ))}
             {execResults.length > 10 && (
@@ -188,6 +209,58 @@ function AiDashboard() {
               <pre>{analysis}</pre>
             </div>
           )}
+        </section>
+
+        {/* AI test run history */}
+        <section className="ai-card ai-card-wide">
+          <h3>AI Test Run History</h3>
+          <button onClick={handleLoadHistory}>
+            Load Last 10 AI Executor Runs
+          </button>
+          <div className="ai-list">
+            {history.length === 0 && <p>No runs loaded yet.</p>}
+            {history.map((run) => (
+              <div key={run.id} className="ai-list-item">
+                <strong>Run #{run.id}</strong> – {run.run_type} –{" "}
+                <span
+                  className={
+                    run.status === "passed"
+                      ? "status-ok"
+                      : run.status === "failed"
+                      ? "status-error"
+                      : ""
+                  }
+                >
+                  {run.status}
+                </span>
+                <div>
+                  Started:{" "}
+                  {run.started_at
+                    ? new Date(run.started_at).toLocaleString()
+                    : "N/A"}
+                  {run.finished_at && (
+                    <>
+                      {" | "}Finished:{" "}
+                      {new Date(run.finished_at).toLocaleString()}
+                    </>
+                  )}
+                </div>
+                {run.summary && (
+                  <div style={{ fontSize: "0.85rem", marginTop: "0.25rem" }}>
+                    {typeof run.summary.total !== "undefined" && (
+                      <>
+                        Total: {run.summary.total}, Passed: {run.summary.passed}
+                        , Failed: {run.summary.failed}
+                      </>
+                    )}
+                    {run.summary.error && (
+                      <span>Error: {run.summary.error}</span>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </section>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+
 import AuthSection from "./components/AuthSection";
 import ProjectsPanel from "./components/ProjectsPanel";
 import BugsPanel from "./components/BugsPanel";
@@ -30,7 +31,9 @@ function App() {
             <span>Logged in as: {currentUserEmail}</span>
             <button onClick={handleLogout}>Logout</button>
           </div>
-        ) : null}
+        ) : (
+          <span>Not logged in</span>
+        )}
       </header>
 
       <main className="app-main">
