@@ -12,10 +12,11 @@ from backend.models import bug  # noqa: F401
 
 # Routers
 from backend.api.routes import auth as auth_routes
-from backend.api.routes import users as user_routes  # NEW
-from backend.api.routes import projects as project_routes  # NEW
-from backend.api.routes import bugs as bug_routes  # NEW
-from backend.api.routes import ai_tests as ai_tests_routes  # NEW
+from backend.api.routes import users as user_routes 
+from backend.api.routes import projects as project_routes 
+from backend.api.routes import bugs as bug_routes  
+from backend.api.routes import ai_tests as ai_tests_routes 
+from backend.api.routes import ai_dashboard as ai_dashboard_routes  # NEW
 
 settings = get_settings()
 
@@ -367,4 +368,5 @@ app.include_router(auth_routes.router)
 app.include_router(user_routes.router)  
 app.include_router(project_routes.router) 
 app.include_router(bug_routes.router) 
-app.include_router(ai_tests_routes.router)  # NEW
+app.include_router(ai_tests_routes.router)
+app.include_router(ai_dashboard_routes.router)  # NEW

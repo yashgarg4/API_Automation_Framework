@@ -85,6 +85,19 @@ def analyze_failures_with_gemini(failures: List[Dict[str, str]]) -> str:
     response = model.generate_content(prompt)
     return response.text
 
+def analyze_failures_api(xml_path: str = "reports/api-results.xml") -> dict:
+    """
+    Helper for FastAPI: return failures + AI analysis as structured data.
+    """
+    failures = parse_junit_failures(xml_path)
+    analysis = analyze_failures_with_gemini(failures)
+
+    return {
+        "xml_path": xml_path,
+        "failures": failures,
+        "analysis": analysis,
+    }
+
 
 def main():
     if len(sys.argv) < 2:
