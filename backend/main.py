@@ -18,6 +18,7 @@ from backend.api.routes import projects as project_routes
 from backend.api.routes import bugs as bug_routes  
 from backend.api.routes import ai_tests as ai_tests_routes 
 from backend.api.routes import ai_dashboard as ai_dashboard_routes  # NEW
+from backend.api.routes import ai_ui_tests as ai_ui_tests_routes
 
 settings = get_settings()
 
@@ -371,3 +372,4 @@ app.include_router(project_routes.router)
 app.include_router(bug_routes.router) 
 app.include_router(ai_tests_routes.router)
 app.include_router(ai_dashboard_routes.router)  # NEW
+app.include_router(ai_ui_tests_routes.router)  # NEW

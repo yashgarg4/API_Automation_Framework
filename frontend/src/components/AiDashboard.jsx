@@ -33,6 +33,10 @@ async function jsonRequest(path, options = {}) {
 }
 
 function AiDashboard() {
+  const [uiUrl, setUiUrl] = useState("http://127.0.0.1:5173");
+  const [uiGenCode, setUiGenCode] = useState("");
+  const [uiGenSavedPath, setUiGenSavedPath] = useState(null);
+
   const [generated, setGenerated] = useState([]);
   const [genCount, setGenCount] = useState(0);
 
@@ -111,6 +115,30 @@ function AiDashboard() {
     }
   };
 
+  const handleGenerateUiTests = async () => {
+    setLoading(true);
+    setError(null);
+    setUiGenCode("");
+    setUiGenSavedPath(null);
+
+    try {
+      const data = await jsonRequest("/ai/ui/generate-tests", {
+        method: "POST",
+        body: JSON.stringify({
+          url: uiUrl,
+          save: true,
+        }),
+      });
+
+      setUiGenCode(data.code || "");
+      setUiGenSavedPath(data.saved_path || null);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="ai-dashboard">
       <h2>AI Testing Dashboard</h2>
@@ -119,6 +147,38 @@ function AiDashboard() {
       {error && <p className="status-error">Error: {error}</p>}
 
       <div className="ai-dashboard-grid">
+        {/* AI UI Test Generator */}
+        <section className="ai-card ai-card-wide">
+          <h3>AI UI Test Generator (Python Playwright)</h3>
+          <p style={{ fontSize: "0.9rem" }}>
+            This will inspect the given URL with Playwright on the backend and
+            ask Gemini to generate pytest + Playwright tests in Python.
+          </p>
+          <div
+            style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem" }}
+          >
+            <input
+              type="text"
+              value={uiUrl}
+              onChange={(e) => setUiUrl(e.target.value)}
+              style={{ flex: 1 }}
+              placeholder="URL to inspect, e.g. http://127.0.0.1:5173"
+            />
+            <button onClick={handleGenerateUiTests}>Generate UI Tests</button>
+          </div>
+          {uiGenSavedPath && (
+            <p style={{ fontSize: "0.85rem" }}>
+              Saved to: <code>{uiGenSavedPath}</code>
+            </p>
+          )}
+          {uiGenCode && (
+            <div className="ai-analysis">
+              <h4>Generated Python Test File</h4>
+              <pre>{uiGenCode}</pre>
+            </div>
+          )}
+        </section>
+
         {/* Generated tests */}
         <section className="ai-card">
           <h3>AI Generated Test Cases</h3>
