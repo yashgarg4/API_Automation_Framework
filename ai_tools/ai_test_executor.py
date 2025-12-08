@@ -199,7 +199,7 @@ def run_ai_tests(
     print(f"Total tests:  {summary['total']}")
     print(f"Passed tests: {summary['passed']}")
     print(f"Failed tests: {summary['failed']}")
-    print("=================================")
+    print("==========")
 
     return 0 if summary["failed"] == 0 else 1
 
