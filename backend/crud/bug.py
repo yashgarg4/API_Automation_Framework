@@ -11,7 +11,7 @@ ALLOWED_STATUS_TRANSITIONS = {
     "open": {"in_progress", "resolved"},
     "in_progress": {"resolved"},
     "resolved": {"closed", "in_progress"},
-    "closed": set(),  # no transitions allowed from closed
+    "closed": set(),  # no transitions allowed from closed status
 }
 
 
