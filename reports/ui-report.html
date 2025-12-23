@@ -565,7 +565,7 @@ const dom = {
         })
         mediaViewer.setup(resultBody, media)
 
-        // Add custom html from the pytest_html_results_table_html hook
+        // Add custom html from pytest_html_results_table_html hook
         tableHtml?.forEach((item) => {
             resultBody.querySelector('td[class="extra"]').insertAdjacentHTML('beforeend', item)
         })
