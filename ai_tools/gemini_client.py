@@ -7,7 +7,7 @@ def get_gemini_model(model_name: str = "gemini-2.5-flash"):
     api_key = settings.GEMINI_API_KEY
 
     if not api_key:
-        # This message will show if .env/env is really missing
+        # This message will show if .env is really missing
         raise RuntimeError("GEMINI_API_KEY not set in .env or environment")
 
     genai.configure(api_key=api_key)
