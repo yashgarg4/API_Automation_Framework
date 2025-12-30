@@ -22,7 +22,6 @@ function ProjectsPanel({ token, selectedProject, onSelectProject }) {
 
   useEffect(() => {
     loadProjects();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const handleCreateProject = async (e) => {
