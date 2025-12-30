@@ -29,7 +29,6 @@ function BugsPanel({ token, selectedProject }) {
     if (selectedProject && token) {
       loadBugs();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProject, token]);
 
   const handleCreateBug = async (e) => {
