@@ -22,7 +22,7 @@ Top-level folders:
 - reports/ — Test run reports (HTML, JUnit XML)
 - requirements.txt — Python deps
 - frontend/.env — frontend environment (API base URL)
-- .env (repo root) — backend env (GEMINI_API_KEY, etc.) — DO NOT COMMIT secrets
+- .env (repo root) — backend env (GEMINI_API_KEY, etc.)
 
 ## High-level architecture
 
