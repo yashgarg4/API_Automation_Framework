@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
 
-    # 👇 IMPORTANT: this must exist
+    # IMPORTANT: this must exist
     GEMINI_API_KEY: str | None = None
 
 
